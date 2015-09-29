@@ -39,12 +39,19 @@ module.exports = {
     this.setState(buildInitialState(nextProps));
   },
 
-  componentWillMount() {
-    // Do the initial sorting if specified.
-    var {sortBy, data} = this.state;
-    if (sortBy) {
-      this.setState({ data: sort(sortBy, data) });
+  componentWillReceiveProps(nextProps) {
+    //If there is new data, update the table without losing the applied sort
+    if (nextProps.initialData.slice(0) !=== this.state.data){
+      this.setState({
+        data: sort(this.state.sortBy, nextProps.initialData.slice(0)),
+        sortBy: this.state.sortBy,
+        filterValues: {},
+        currentPage: 0,
+        pageLength: nextProps.initialPageLength,
+      });
+      return;
     }
+    this.setState(buildInitialState(nextProps));
   },
 
   onSort(sortBy) {

@@ -154,7 +154,7 @@ export default class Table {
 
     let emptyText = this.props.emptyText ?
                     (<tr><td colSpan={columns.length} className="text-center">{this.props.emptyText}</td></tr>) :
-                    (<tr></tr>)
+                    (<tr><td colSpan={columns.length} className="text-center">No data</td></tr>)
 
     return (
       <table className={this.props.className}>
